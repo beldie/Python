@@ -49,37 +49,16 @@ def chequear_letra(letra_elegida, palabra_oculta, vidas, coincidencias):
         coincidencias += 1
     elif letra_elegida in palabra_oculta and letra_elegida in letras_correctas:
         print("Ya has encontrado esa letra")
-    else:
+    elif letra_elegida not in letras_incorrectas:
         letras_incorrectas.append(letra_elegida)
         vidas -= 1
+        print("Esta letra no esta en la palabra. Intenta con otra diferente")
+    else:
+       # letras_incorrectas.append(letra_elegida)
+        #vidas -= 1
+       print("Ya has intentado esa letra y es incorrecta, elige otra diferente.")
     if vidas == 0:
         fin = perder()
     elif coincidencias == letras_unicas:
         fin = ganar(palabra_oculta)
     return vidas, fin, coincidencias
-
-
-def perder():
-    print("Te quedaste SIN VIDAS ")
-    print(f"La palabra oculta era {palabra}")
-    return True
-
-
-def ganar(palabra_descubierta):
-    mostrar_nuevo_tablero(palabra_descubierta)
-    print(f"Felicitaciones has encontrado la palabra correcta que es: {palabra_descubierta.upper()}!!!")
-    return True
-
-
-palabra, letras_unicas = elegir_palabra(palabras)
-
-while not juego_terminado:
-    print("\n" + "*" * 20 + "\n")
-    mostrar_nuevo_tablero(palabra)
-    print("\n")
-    print(f"Letras incorrectas: " + ' - '.join(letras_incorrectas))
-    print(f"vidas :{intentos}")
-    print("\n" + "*" * 20 + "\n")
-    letra = pedir_letra()
-    intentos, terminado, aciertos = chequear_letra(letra, palabra, intentos, aciertos)
-    juego_terminado = terminado
